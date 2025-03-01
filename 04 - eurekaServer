@@ -1,0 +1,51 @@
+Step 1 :  https://start.spring.io/
+        1) --->  create a maven project  for server
+         
+                      with dependencies  - 
+                                   1) Eureka Server 
+                                   2) Spring web
+        2) ----> create a maven project for services 
+                      with dependencies -
+                                  1) Spring web
+                                  2) Eureka client
+
+
+Step 2 : 
+        1) now open eureka server 
+                open application.properties
+                        spring.application.name=EurekaServer           (EurekaServer is just that file Name)
+                        server.port=8761                               ( 8761 is a port numer )
+                        eureka.client.register-with-eureka=false       ( all will be false bec we dont need eureka server to be visibile on eureka server )
+                        eureka.client.fetch-registry=false
+                        eureka.instance.prefer-ip-address=false
+          2) and in application.java file one annotation needed to be added ( @EnableEurekaServer) 
+                          package com.example.eureka.EurekaServer;
+                          
+                          import org.springframework.boot.SpringApplication;
+                          import org.springframework.boot.autoconfigure.SpringBootApplication;
+                          import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+                          
+                          @SpringBootApplication
+            ------->      @EnableEurekaServer                    --------------->    (  This annotation need to be added   )  This helps the eureka that is used to enable a Eureka Server in a Spring Boot application .
+                          public class EurekaServerApplication {
+                          
+                          	public static void main(String[] args) {
+                          		SpringApplication.run(EurekaServerApplication.class, args);
+                          	}
+                          
+                          }
+
+
+
+          3) Now uh can check weather the server is working fine or not by searching localhost:8761
+
+Step 3 :
+      1) now open services
+                open properties 
+                      spring.application.name=test1
+                      
+                      server.port=8081
+                      eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+                      eureka.client.register-with-eureka=true
+
+                
